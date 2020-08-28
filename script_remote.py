@@ -35,7 +35,7 @@ def init_bot():
         if submission_date >= tolerance_time:
             if any(submission.link_flair_text in s for s in ['Humor',
                    'Noticias', 'Meme', 'Ask Mexico', 'Info']):
-                print submission.title
+                print(submission.title)
                 submission.crosspost('mejico', title=submission.title,
                         send_replies=False)
 
