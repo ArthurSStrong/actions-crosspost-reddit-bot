@@ -7,7 +7,7 @@ Look on one subredit and crosspost submissions with certain conditions.
 
 import os
 import praw
-from datetime import date
+from datetime import datetime
 from datetime import timedelta
 
 CLIENT_ID = (os.environ['CLIENT_ID'] if 'CLIENT_ID'
@@ -28,10 +28,10 @@ def init_bot():
                          username=USERNAME, password=PASSWORD,
                          user_agent='testscript by /u/Disentibot')
 
-    tolerance_time = date.today() - timedelta(hours=4)
+    tolerance_time = datetime.today() - timedelta(hours=4)
 
     for submission in reddit.subreddit('mexico').new(limit=100):
-        submission_date = date.fromtimestamp(submission.created_utc)
+        submission_date = datetime.fromtimestamp(submission.created_utc)
         if submission_date >= tolerance_time:
             if any(submission.link_flair_text in s for s in ['Humor',
                    'Noticias', 'Meme', 'Ask Mexico', 'Info']):
