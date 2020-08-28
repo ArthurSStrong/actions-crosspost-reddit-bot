@@ -19,7 +19,7 @@ PASSWORD = (os.environ['PASSWORD'] if 'PASSWORD' in os.environ else '')
 
 
 def init_bot():
-    """Read the RSS feed."""
+    """Initilize Praw and explore sub by new."""
 
     # We create the Reddit instance.
 
@@ -30,7 +30,7 @@ def init_bot():
 
     tolerance_time = date.today() - timedelta(hours=4)
 
-    for submission in reddit.subreddit('mexico').new(limit=10):
+    for submission in reddit.subreddit('mexico').new(limit=100):
         submission_date = date.fromtimestamp(submission.created_utc)
         if submission_date >= tolerance_time:
             if any(submission.link_flair_text in s for s in ['Humor',
