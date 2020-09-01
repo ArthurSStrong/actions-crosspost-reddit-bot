@@ -31,6 +31,45 @@ ACCESS_TOKEN_SECRET = (os.environ['ACCESS_TOKEN_SECRET'
                        )
 
 
+LOG_FILE = './processed_tweets.txt'
+
+
+def load_file(file):
+    """Load the log file and creates it if it doesn't exist.
+
+     Parameters
+    ----------
+    file : str
+        The file to write down
+    Returns
+    -------
+    list
+        A list of urls.
+    """
+
+    try:
+        with open(file, 'r', encoding='utf-8') as temp_file:
+            return temp_file.read().splitlines()
+    except Exception:
+
+        with open(LOG_FILE, 'w', encoding='utf-8') as temp_file:
+            return []
+
+
+def update_file(file, data):
+    """Update the log file.
+
+    Parameters
+    ----------
+    file : str
+        The file to write down.
+    data : str
+        The data to log.
+    """
+
+    with open(file, 'a', encoding='utf-8') as temp_file:
+        temp_file.write(data + '\n')
+
 def get_tweets(api, t_user):
     """Get tweets from api.
 
@@ -90,16 +129,23 @@ def init_bot():
 
     tolerance_time = datetime.today() - timedelta(hours=4)
 
+    log = load_file(LOG_FILE)
+
     for tweet in reversed(tweets):
-        image_count = len(tweet.entities['media'])
-        print('Numero de imagenes {}'.format(image_count))
+        image_count = len(tweet.extended_entities['media'])
+        print('media number: {}  created_at: {}'.format(image_count, tweet.created_at))
         if image_count and image_count < 2 and tweet.created_at >= tolerance_time:
             title = ' '.join([item for item in tweet.full_text.split(' ') if 'https' not in item]).replace('.', '')
             title = ' '.join(title.replace('\r', '. ').replace('\n', '. ').split())
-            print(title)
+
+            if title in log:
+                continue
+
+            print("submitting {}".format(title))
             reddit.subreddit('mejico').submit(title=title,
                     url=tweet.entities['media'][0]['media_url'],
                     flair_id='9874ae64-eb9e-11ea-ac3b-0e4662ff27e9')
+            update_file(LOG_FILE, title)
 
 
 if __name__ == '__main__':
