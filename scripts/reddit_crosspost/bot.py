@@ -33,6 +33,8 @@ def init_bot():
     for submission in reddit.subreddit('mexico').new(limit=100):
         submission_date = datetime.fromtimestamp(submission.created_utc)
         if submission_date >= tolerance_time:
+            if submission.link_flair_text is None:
+              continue
             if any(submission.link_flair_text in s for s in ['Humor',
                    'Noticias', 'Meme', 'Ask Mexico', 'Info']):
                 print(submission.title)
