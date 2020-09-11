@@ -132,20 +132,24 @@ def init_bot():
     log = load_file(LOG_FILE)
 
     for tweet in reversed(tweets):
-        image_count = len(tweet.extended_entities['media'])
-        print('media number: {}  created_at: {}'.format(image_count, tweet.created_at))
-        if image_count and image_count < 2 and tweet.created_at >= tolerance_time:
-            title = ' '.join([item for item in tweet.full_text.split(' ') if 'https' not in item]).replace('.', '')
-            title = ' '.join(title.replace('\r', '. ').replace('\n', '. ').split())
+    	try:
+    		image_count = len(tweet.extended_entities['media'])
+    		print('media number: {}  created_at: {}'.format(image_count, tweet.created_at))
+    		if image_count and image_count < 2 and tweet.created_at >= tolerance_time:
+    		    title = ' '.join([item for item in tweet.full_text.split(' ') if 'https' not in item]).replace('.', '')
+    		    title = ' '.join(title.replace('\r', '. ').replace('\n', '. ').split())
 
-            if title in log:
-                continue
+    		    if title in log:
+    		        continue
 
-            print("submitting {}".format(title))
-            reddit.subreddit('mejico').submit(title=title,
-                    url=tweet.entities['media'][0]['media_url'],
-                    flair_id='9874ae64-eb9e-11ea-ac3b-0e4662ff27e9')
-            update_file(LOG_FILE, title)
+    		    print("submitting {}".format(title))
+    		    reddit.subreddit('mejico').submit(title=title,
+    		            url=tweet.entities['media'][0]['media_url'],
+    		            flair_id='9874ae64-eb9e-11ea-ac3b-0e4662ff27e9')
+    		    update_file(LOG_FILE, title)
+    	except Exception as e:
+    		print(e)
+    		continue        
 
 
 if __name__ == '__main__':
