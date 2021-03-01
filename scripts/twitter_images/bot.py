@@ -145,7 +145,8 @@ def init_bot():
     		    print("submitting {}".format(title))
     		    reddit.subreddit('mejico').submit(title=title,
     		            url=tweet.entities['media'][0]['media_url'],
-    		            flair_id='9874ae64-eb9e-11ea-ac3b-0e4662ff27e9')
+    		            flair_id='9874ae64-eb9e-11ea-ac3b-0e4662ff27e9',
+                    send_replies=False)
     		    update_file(LOG_FILE, title)
     	except Exception as e:
     		print(e)
