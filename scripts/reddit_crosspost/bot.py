@@ -39,7 +39,7 @@ def init_bot():
                    'Noticias', 'Meme', 'Ask Mexico', 'Info']):
                 print(submission.title)
                 submission.crosspost('mejico', title=submission.title,
-                        send_replies=False)
+                        send_replies=False, flair_id='9874ae64-eb9e-11ea-ac3b-0e4662ff27e9')
 
 
 if __name__ == '__main__':
