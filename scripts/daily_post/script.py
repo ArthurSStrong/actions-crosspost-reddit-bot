@@ -72,8 +72,8 @@ def init_bot():
         body = "**Que chingue(n) a su madre {}**.\n\n_este es un bot automatizado que todo los días manda a chingar a su madre a un presidente de México_".format(element)
         print(title)
         print(body)
-        reddit.subreddit("mejico").submit(title, selftext =body, flair_id="c3fa602e-a2a0-11eb-9d8a-0e8071724771")
-        #reddit.subreddit("mejico").submit(title, selftext =body, flair_id="f3008236-73ad-11ea-b8b9-0ed3c0dc399d")
+        #reddit.subreddit("mejico").submit(title, selftext =body, flair_id="c3fa602e-a2a0-11eb-9d8a-0e8071724771")
+        reddit.subreddit("mujico").submit(title, selftext =body, flair_id="f3008236-73ad-11ea-b8b9-0ed3c0dc399d")
 
         update_file(LOG_FILE, element)
         break
