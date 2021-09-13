@@ -3972,3 +3972,4 @@ Demoraron, pero ya están aquí
 "¿Y contestas rápido?" . Yo:
 La factura de la luz. —Óleo sobre lienzo
 —Señora, disculpe, su tarjeta BBVA no pasó
+App de limpieza: Queda poco espacio, deberías de eliminar Archivos o Aplicaciones. . Yo: *Elimino la App de limpieza*. . La app de limpieza:
