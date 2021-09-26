@@ -1,2 +1,2 @@
 praw
-tweepy=3.10.0
+tweepy==3.10.0
