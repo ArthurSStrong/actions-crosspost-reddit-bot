@@ -69,7 +69,7 @@ def init_bot():
         if element in log:
             continue
         title = "Que chingue(n) a su madre {}...".format(element)
-        body = "**Que chingue(n) a su madre {}**.\n\n_este es un bot automatizado que todo los días manda a chingar a su madre a un presidente de México_".format(element)
+        body = "**Que chingue(n) a su madre {}**.\n\n_este es un bot automatizado que todo los días manda a chingar a su madre a un estado de México_\n\n_El orden es aleatorio_\n\n_Pon en los comentarios porque este estado debe chingar a su madre_".format(element)
         print(title)
         print(body)
         #reddit.subreddit("mejico").submit(title, selftext =body, flair_id="c3fa602e-a2a0-11eb-9d8a-0e8071724771")
