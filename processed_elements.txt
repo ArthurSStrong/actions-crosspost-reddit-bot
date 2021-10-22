@@ -71,3 +71,4 @@ Guanajuato
 Aguascalientes
 Chiapas
 Tamaulipas
+Tlaxcala (si existiera)
