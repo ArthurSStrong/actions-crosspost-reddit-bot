@@ -7,6 +7,7 @@ Look on one subredit and crosspost submissions with certain conditions.
 
 import os
 import praw
+import logging
 from datetime import datetime
 from datetime import timedelta
 
@@ -38,8 +39,15 @@ def init_bot():
             if any(submission.link_flair_text in s for s in ['Humor',
                    'Noticias', 'Meme', 'Ask Mexico', 'Info']):
                 print(submission.title)
-                submission.crosspost('mejico', title=submission.title,
+                try:
+                    pass
+                    submission.crosspost('mejico', title=submission.title,
                         send_replies=False, flair_id='c3fa602e-a2a0-11eb-9d8a-0e8071724771')
+                except Exception as e:
+                    logging.exception("An exception was thrown!")
+                    continue
+
+    return
 
 
 if __name__ == '__main__':
