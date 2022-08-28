@@ -7,6 +7,7 @@ import praw
 import tweepy
 from datetime import datetime
 from datetime import timedelta
+import translators as ts
 
 CLIENT_ID = (os.environ['CLIENT_ID'] if 'CLIENT_ID'
              in os.environ else '')
@@ -132,25 +133,30 @@ def init_bot():
     log = load_file(LOG_FILE)
 
     for tweet in reversed(tweets):
-    	try:
-    		image_count = len(tweet.extended_entities['media'])
-    		print('media number: {}  created_at: {}'.format(image_count, tweet.created_at))
-    		if image_count and image_count < 2 and tweet.created_at >= tolerance_time:
-    		    title = ' '.join([item for item in tweet.full_text.split(' ') if 'https' not in item]).replace('.', '')
-    		    title = ' '.join(title.replace('\r', '. ').replace('\n', '. ').split())
+        try:
+            image_count = len(tweet.extended_entities['media'])
+            print('media number: {}  created_at: {}'.format(image_count, tweet.created_at))
+            if image_count and image_count < 2 and tweet.created_at >= tolerance_time:
+                title = ' '.join([item for item in tweet.full_text.split(' ') if 'https' not in item]).replace('.', '')
+                title = ' '.join(title.replace('\r', '. ').replace('\n', '. ').split())
 
-    		    if title in log:
-    		        continue
+                if title in log:
+                    continue
+                try:
+                    title = ts.google(str(title))
+                except Exception as e:
+                    print(e)
+                    continue
 
-    		    print("submitting {}".format(title))
-    		    reddit.subreddit('mejico').submit(title=title,
-    		            url=tweet.entities['media'][0]['media_url'],
-    		            flair_id='9874ae64-eb9e-11ea-ac3b-0e4662ff27e9',
+                print("submitting {}".format(title))
+                reddit.subreddit('mujico').submit(title=title,
+                        url=tweet.entities['media'][0]['media_url'],
+                        flair_id='ff81fb46-f736-11e9-a5f0-0e4afb6f06bc',
                     send_replies=False)
-    		    update_file(LOG_FILE, title)
-    	except Exception as e:
-    		print(e)
-    		continue        
+                update_file(LOG_FILE, title)
+        except Exception as e:
+            print(e)
+            continue        
 
 
 if __name__ == '__main__':
