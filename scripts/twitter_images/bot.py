@@ -7,7 +7,6 @@ import praw
 import tweepy
 from datetime import datetime
 from datetime import timedelta
-import translators as ts
 
 CLIENT_ID = (os.environ['CLIENT_ID'] if 'CLIENT_ID'
              in os.environ else '')
@@ -141,11 +140,6 @@ def init_bot():
                 title = ' '.join(title.replace('\r', '. ').replace('\n', '. ').split())
 
                 if title in log:
-                    continue
-                try:
-                    title = ts.google(str(title))
-                except Exception as e:
-                    print(e)
                     continue
 
                 print("submitting {}".format(title))
